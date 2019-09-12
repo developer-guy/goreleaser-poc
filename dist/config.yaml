@@ -1,16 +1,23 @@
+project_name: goreleaser-poc
 release:
+  github:
+    owner: developer-guy
+    name: goreleaser-poc
   name_template: '{{.Tag}}'
 brews:
-- commit_author:
+- name: goreleaser-poc
+  commit_author:
     name: goreleaserbot
     email: goreleaser@carlosbecker.com
-  install: bin.install ""
+  install: bin.install "goreleaser-poc"
 scoop:
+  name: goreleaser-poc
   commit_author:
     name: goreleaserbot
     email: goreleaser@carlosbecker.com
 builds:
-- goos:
+- id: goreleaser-poc
+  goos:
   - linux
   - darwin
   goarch:
@@ -27,13 +34,14 @@ builds:
   ldflags:
   - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
     -X main.builtBy=goreleaser
+  binary: goreleaser-poc
   env:
   - CGO_ENABLED=0
   lang: go
 archives:
 - id: default
   builds:
-  - ""
+  - goreleaser-poc
   name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm
     }}v{{ .Arm }}{{ end }}'
   replacements:
@@ -57,13 +65,13 @@ nfpms:
     }}v{{ .Arm }}{{ end }}'
   id: default
   builds:
-  - ""
+  - goreleaser-poc
   bindir: /usr/local/bin
 snapcrafts:
 - name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm
     }}v{{ .Arm }}{{ end }}'
   builds:
-  - ""
+  - goreleaser-poc
 snapshot:
   name_template: '{{ .Tag }}-next'
 checksum:
